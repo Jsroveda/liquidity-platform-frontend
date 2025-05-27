@@ -1,20 +1,3 @@
-
-import { Header } from "@/components/Header";
-import { Sidebar } from "@/components/Sidebar";
-import { Dashboard } from "@/components/Dashboard";
-
-const Index = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <Header />
-      <div className="flex">
-        <Sidebar />
-        <main className="flex-1 p-6">
-          <Dashboard />
-        </main>
-      </div>
-    </div>
-  );
-};
-
-export default Index;
+// This file is no longer needed as routing is handled by Shell.tsx
+// Keeping for compatibility but Shell.tsx now handles the main layout
+export { Shell as default } from "@/shell/Shell";
