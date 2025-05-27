@@ -4,12 +4,12 @@ import { Kafka, Consumer, Producer } from 'kafkajs';
 // Kafka client configuration
 const kafka = new Kafka({
   clientId: 'liquidity-hub-frontend',
-  brokers: [process.env.VITE_KAFKA_BROKER || 'localhost:9092'],
-  ssl: process.env.VITE_KAFKA_SSL === 'true',
-  sasl: process.env.VITE_KAFKA_USERNAME ? {
+  brokers: [import.meta.env.VITE_KAFKA_BROKER || 'localhost:9092'],
+  ssl: import.meta.env.VITE_KAFKA_SSL === 'true',
+  sasl: import.meta.env.VITE_KAFKA_USERNAME ? {
     mechanism: 'plain',
-    username: process.env.VITE_KAFKA_USERNAME,
-    password: process.env.VITE_KAFKA_PASSWORD || '',
+    username: import.meta.env.VITE_KAFKA_USERNAME,
+    password: import.meta.env.VITE_KAFKA_PASSWORD || '',
   } : undefined,
 });
 

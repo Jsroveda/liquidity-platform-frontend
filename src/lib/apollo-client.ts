@@ -5,7 +5,7 @@ import { onError } from '@apollo/client/link/error';
 
 // HTTP link to your GraphQL endpoint
 const httpLink = createHttpLink({
-  uri: process.env.VITE_GRAPHQL_ENDPOINT || 'http://localhost:4000/graphql',
+  uri: import.meta.env.VITE_GRAPHQL_ENDPOINT || 'http://localhost:4000/graphql',
 });
 
 // Auth link to add authentication headers
