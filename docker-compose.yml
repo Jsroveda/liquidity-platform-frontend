@@ -1,0 +1,43 @@
+
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      - VITE_GRAPHQL_ENDPOINT=http://backend:4000/graphql
+      - VITE_KAFKA_BROKER=kafka:9092
+      - VITE_AUTH_ENDPOINT=http://backend:3001/auth
+
+  # Example backend service (adjust as needed for your platform)
+  backend:
+    # Your backend image/build configuration
+    image: your-backend-image
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+
+  # Example Kafka service (if needed)
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
