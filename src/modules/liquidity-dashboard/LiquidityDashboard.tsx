@@ -4,15 +4,24 @@ import { Button } from "@/components/ui/button";
 import { MetricCard } from "@/modules/liquidity-dashboard/components/MetricCard";
 import { LiquidityChart } from "@/modules/liquidity-dashboard/components/LiquidityChart";
 import { RecentActivity } from "@/modules/liquidity-dashboard/components/RecentActivity";
-import { CashVisibilityWidget } from "@/modules/liquidity-dashboard/components/CashVisibilityWidget";
-import { AIForecastWidget } from "@/modules/liquidity-dashboard/components/AIForecastWidget";
-import { QuickActionsWidget } from "@/modules/liquidity-dashboard/components/QuickActionsWidget";
-import { SettlementStatusWidget } from "@/modules/liquidity-dashboard/components/SettlementStatusWidget";
+import { ConfigurableDashboard } from "@/modules/liquidity-dashboard/components/ConfigurableDashboard";
 import { Droplets, TrendingUp, DollarSign, Activity, ArrowRight, Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { getUserDashboardConfig } from "./config/dashboardConfig";
+import { DashboardLayout } from "./types/widget";
 
 export const LiquidityDashboard = () => {
   const navigate = useNavigate();
+  const [dashboardLayout, setDashboardLayout] = useState<DashboardLayout>(
+    getUserDashboardConfig("emma-li")
+  );
+
+  const handleLayoutChange = (newLayout: DashboardLayout) => {
+    setDashboardLayout(newLayout);
+    // Future: Save to localStorage or API
+    console.log('Dashboard layout updated:', newLayout);
+  };
 
   return (
     <div className="space-y-6">
@@ -45,14 +54,11 @@ export const LiquidityDashboard = () => {
         </div>
       </div>
 
-      {/* Emma's Priority Widgets Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
-        <div className="xl:col-span-2">
-          <CashVisibilityWidget />
-        </div>
-        <QuickActionsWidget />
-        <AIForecastWidget />
-      </div>
+      {/* Configurable Widgets Row */}
+      <ConfigurableDashboard 
+        layout={dashboardLayout}
+        onLayoutChange={handleLayoutChange}
+      />
 
       {/* Key Metrics Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -87,9 +93,7 @@ export const LiquidityDashboard = () => {
       </div>
 
       {/* Emma's Workflow Support Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <SettlementStatusWidget />
-        
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">        
         <Card className="border-slate-200 shadow-sm">
           <CardHeader>
             <CardTitle className="text-slate-800">Liquidity Trends</CardTitle>
@@ -99,10 +103,7 @@ export const LiquidityDashboard = () => {
             <LiquidityChart />
           </CardContent>
         </Card>
-      </div>
 
-      {/* Supporting Information Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="border-slate-200 shadow-sm">
           <CardHeader>
             <CardTitle className="text-slate-800">Recent Treasury Activity</CardTitle>
@@ -112,7 +113,10 @@ export const LiquidityDashboard = () => {
             <RecentActivity />
           </CardContent>
         </Card>
+      </div>
 
+      {/* Supporting Information Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="border-slate-200 shadow-sm">
           <CardHeader>
             <CardTitle className="text-slate-800">Integration Status</CardTitle>
