@@ -1,43 +1,109 @@
 
-version: '3.8'
-
 services:
+  app:
+    build:
+      context: /Users/josephroveda/liquidity-hub-mvp
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - /Users/josephroveda/liquidity-hub-mvp:/workspace
+    command: sleep infinity
+
+  # Frontend service - your Lovable UI
   frontend:
     build:
-      context: .
+      context: ./ui
       dockerfile: Dockerfile
+    container_name: liquidity-hub-frontend
     ports:
       - "3000:80"
     depends_on:
-      - backend
+      - snapshot-service
     environment:
-      - VITE_GRAPHQL_ENDPOINT=http://backend:4000/graphql
+      - VITE_GRAPHQL_ENDPOINT=http://snapshot-service:8000/graphql
       - VITE_KAFKA_BROKER=kafka:9092
-      - VITE_AUTH_ENDPOINT=http://backend:3001/auth
+      - VITE_AUTH_ENDPOINT=http://snapshot-service:8000/auth
+      - VITE_API_ENDPOINT=http://snapshot-service:8000
+    networks:
+      - default
 
-  # Example backend service (adjust as needed for your platform)
-  backend:
-    # Your backend image/build configuration
-    image: your-backend-image
+  payments-replay:
+    build:
+      context: ./adapters/payments-replay
+      dockerfile: Dockerfile
+    image: liquidity-hub-payments-replay
+    container_name: liquidity-hub-payments-replay
+    depends_on:
+      - kafka
+    env_file:
+      - .env
+    volumes:
+      - ./adapters/payments-replay:/app
+    working_dir: /app
+    command: python payments-replay.py
+
+  snapshot-service:
+    build:
+      context: ./services/snapshot-service
+      dockerfile: Dockerfile
+    image: liquidity-hub-snapshot-service
+    container_name: liquidity-hub-snapshot-service
     ports:
-      - "4000:4000"
+      - "8000:8000"
+    depends_on:
+      kafka:
+        condition: service_healthy
+      timescale:
+        condition: service_healthy
+# reference the .env file in the same directory as the docker-compose.yml
+    env_file:
+      - .env
+    volumes:
+      - ./services/snapshot-service:/app
+    working_dir: /app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.0
+    container_name: zookeeper
     environment:
-      - NODE_ENV=production
-
-  # Example Kafka service (if needed)
-  kafka:
-    image: confluentinc/cp-kafka:latest
+      ZOOKEEPER_CLIENT_PORT: 2181
     ports:
-      - "9092:9092"
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.3.0
+    container_name: kafka
+    depends_on:
+     - zookeeper
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
     ports:
-      - "2181:2181"
+      - "9092:9092"
+    healthcheck:                    # ←--- add this block
+      test: ["CMD", "bash", "-c", "cub kafka-ready -b kafka:9092 1 20"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  timescale:
+    image: timescale/timescaledb:2.13.0-pg14
+    container_name: timescale
     environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
+      POSTGRES_USER: hub
+      POSTGRES_PASSWORD: hubpwd
+      POSTGRES_DB: hub
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    healthcheck:                    # ←--- add this block
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+networks:
+  default:
+   name: liquidity-net
