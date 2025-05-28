@@ -1,9 +1,14 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MetricCard } from "@/modules/liquidity-dashboard/components/MetricCard";
 import { LiquidityChart } from "@/modules/liquidity-dashboard/components/LiquidityChart";
 import { RecentActivity } from "@/modules/liquidity-dashboard/components/RecentActivity";
-import { Droplets, TrendingUp, DollarSign, Activity, ArrowRight } from "lucide-react";
+import { CashVisibilityWidget } from "@/modules/liquidity-dashboard/components/CashVisibilityWidget";
+import { AIForecastWidget } from "@/modules/liquidity-dashboard/components/AIForecastWidget";
+import { QuickActionsWidget } from "@/modules/liquidity-dashboard/components/QuickActionsWidget";
+import { SettlementStatusWidget } from "@/modules/liquidity-dashboard/components/SettlementStatusWidget";
+import { Droplets, TrendingUp, DollarSign, Activity, ArrowRight, Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export const LiquidityDashboard = () => {
@@ -11,12 +16,25 @@ export const LiquidityDashboard = () => {
 
   return (
     <div className="space-y-6">
+      {/* Header with Emma's context */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">Liquidity Dashboard</h2>
-          <p className="text-slate-600">Monitor your liquidity positions and market performance</p>
+          <h2 className="text-2xl font-bold text-slate-800 mb-2">Treasury Dashboard</h2>
+          <p className="text-slate-600">Real-time liquidity management for global treasury operations</p>
+          <div className="flex items-center gap-2 mt-2">
+            <span className="text-sm text-slate-500">Welcome back, Emma Li</span>
+            <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Corporate Treasury Manager</span>
+          </div>
         </div>
         <div className="flex space-x-3">
+          <Button 
+            size="sm"
+            variant="outline"
+            className="border-orange-600 text-orange-600 hover:bg-orange-50"
+          >
+            <Bell className="mr-2 h-4 w-4" />
+            CFO Report Due
+          </Button>
           <Button 
             onClick={() => navigate('/liquidity-pools')}
             className="bg-blue-600 hover:bg-blue-700 text-white"
@@ -24,64 +42,99 @@ export const LiquidityDashboard = () => {
             View Liquidity Pools
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
-          <Button 
-            onClick={() => navigate('/account-structure')}
-            variant="outline"
-            className="border-blue-600 text-blue-600 hover:bg-blue-50"
-          >
-            Account Structure
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
         </div>
       </div>
 
+      {/* Emma's Priority Widgets Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="xl:col-span-2">
+          <CashVisibilityWidget />
+        </div>
+        <QuickActionsWidget />
+        <AIForecastWidget />
+      </div>
+
+      {/* Key Metrics Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <MetricCard
-          title="Total Liquidity"
-          value="$2,847,392"
+          title="Total Available Cash"
+          value="$2,847M"
           change="+12.4%"
           icon={Droplets}
           trend="up"
         />
         <MetricCard
-          title="24h Volume"
-          value="$1,239,847"
+          title="Nostro Optimization"
+          value="73.2%"
           change="+8.2%"
           icon={TrendingUp}
           trend="up"
         />
         <MetricCard
-          title="Total Value Locked"
-          value="$8,923,741"
-          change="+5.7%"
+          title="FX Cost Savings"
+          value="11.3bp"
+          change="-2.1bp"
           icon={DollarSign}
           trend="up"
         />
         <MetricCard
-          title="Active Pools"
-          value="127"
-          change="+3"
+          title="Settlements Today"
+          value="47"
+          change="+12"
           icon={Activity}
           trend="up"
         />
       </div>
 
+      {/* Emma's Workflow Support Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <SettlementStatusWidget />
+        
         <Card className="border-slate-200 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-slate-800">Liquidity Overview</CardTitle>
+            <CardTitle className="text-slate-800">Liquidity Trends</CardTitle>
+            <p className="text-sm text-slate-600">6-month cash position analysis</p>
           </CardHeader>
           <CardContent>
             <LiquidityChart />
           </CardContent>
         </Card>
+      </div>
 
+      {/* Supporting Information Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="border-slate-200 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-slate-800">Recent Activity</CardTitle>
+            <CardTitle className="text-slate-800">Recent Treasury Activity</CardTitle>
+            <p className="text-sm text-slate-600">Latest intercompany and settlement transactions</p>
           </CardHeader>
           <CardContent>
             <RecentActivity />
+          </CardContent>
+        </Card>
+
+        <Card className="border-slate-200 shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-slate-800">Integration Status</CardTitle>
+            <p className="text-sm text-slate-600">Connected systems and data latency</p>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex items-center justify-between p-2 bg-green-50 rounded">
+              <span className="text-sm font-medium">Multi-Bank APIs</span>
+              <span className="text-xs text-green-600">✓ 4 banks connected</span>
+            </div>
+            <div className="flex items-center justify-between p-2 bg-green-50 rounded">
+              <span className="text-sm font-medium">ERP Integration</span>
+              <span className="text-xs text-green-600">✓ SAP live feed</span>
+            </div>
+            <div className="flex items-center justify-between p-2 bg-blue-50 rounded">
+              <span className="text-sm font-medium">FX Rate Feed</span>
+              <span className="text-xs text-blue-600">↻ 15s refresh</span>
+            </div>
+            <div className="flex items-center justify-between p-2 bg-orange-50 rounded">
+              <span className="text-sm font-medium">APAC Balances</span>
+              <span className="text-xs text-orange-600">⚠ 45s delay</span>
+            </div>
           </CardContent>
         </Card>
       </div>
