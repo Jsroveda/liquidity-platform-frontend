@@ -6,7 +6,12 @@ export const emmaDashboardConfig: DashboardLayout = {
   widgets: [
     {
       id: 'liquidity-snapshot',
-      position: { col: 1, row: 1, colSpan: 4, rowSpan: 1 },
+      position: { col: 1, row: 1, colSpan: 3, rowSpan: 1 },
+      isVisible: true,
+    },
+    {
+      id: 'quick-actions',
+      position: { col: 4, row: 1, colSpan: 1, rowSpan: 1 },
       isVisible: true,
     },
     {
@@ -15,18 +20,13 @@ export const emmaDashboardConfig: DashboardLayout = {
       isVisible: true,
     },
     {
-      id: 'quick-actions',
+      id: 'ai-forecast',
       position: { col: 1, row: 3, colSpan: 1, rowSpan: 1 },
       isVisible: true,
     },
     {
-      id: 'ai-forecast',
-      position: { col: 2, row: 3, colSpan: 1, rowSpan: 1 },
-      isVisible: true,
-    },
-    {
       id: 'settlement-status',
-      position: { col: 3, row: 3, colSpan: 1, rowSpan: 1 },
+      position: { col: 2, row: 3, colSpan: 1, rowSpan: 1 },
       isVisible: true,
     },
   ],
