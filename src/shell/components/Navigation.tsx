@@ -1,12 +1,13 @@
 
-import { BarChart3, TrendingUp, Droplets, Building2, Settings, HelpCircle } from "lucide-react";
+import { BarChart3, ArrowLeftRight, TrendingUp, FileText, Settings, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const navigationItems = [
-  { icon: BarChart3, label: "Dashboard", path: "/" },
-  { icon: Droplets, label: "Liquidity Pools", path: "/liquidity-pools" },
-  { icon: Building2, label: "Account Structure", path: "/account-structure" },
+  { icon: BarChart3, label: "Overview", path: "/" },
+  { icon: ArrowLeftRight, label: "Transfers", path: "/transfers" },
+  { icon: TrendingUp, label: "Analytics", path: "/analytics" },
+  { icon: FileText, label: "Reports", path: "/reports" },
 ];
 
 const secondaryItems = [
@@ -18,7 +19,12 @@ export const Navigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    if (path === "/") {
+      return location.pathname === "/" || location.pathname.startsWith("/overview");
+    }
+    return location.pathname.startsWith(path);
+  };
 
   return (
     <aside className="w-64 bg-white border-r border-slate-200 h-[calc(100vh-73px)]">

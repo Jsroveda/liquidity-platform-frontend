@@ -1,16 +1,16 @@
 
 import { WidgetConfig } from '../types/widget';
-import { CashVisibilityWidget } from '../components/CashVisibilityWidget';
+import { LiquiditySnapshotWidget } from '../components/LiquiditySnapshotWidget';
 import { AIForecastWidget } from '../components/AIForecastWidget';
 import { QuickActionsWidget } from '../components/QuickActionsWidget';
 import { SettlementStatusWidget } from '../components/SettlementStatusWidget';
 
 export const widgetRegistry: Record<string, WidgetConfig> = {
-  'cash-visibility': {
-    id: 'cash-visibility',
-    component: CashVisibilityWidget,
-    title: 'Real-Time Cash Position',
-    description: 'Multi-currency cash balances with real-time updates',
+  'liquidity-snapshot': {
+    id: 'liquidity-snapshot',
+    component: LiquiditySnapshotWidget,
+    title: 'Liquidity Snapshot',
+    description: 'Total liquidity overview with multi-currency breakdown and account drill-down',
     defaultSize: { cols: 2, rows: 1 },
     category: 'cash',
     roles: ['treasury-manager', 'cfo'],

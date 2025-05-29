@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MetricCard } from "@/modules/liquidity-dashboard/components/MetricCard";
@@ -7,14 +6,11 @@ import { RecentActivity } from "@/modules/liquidity-dashboard/components/RecentA
 import { ConfigurableDashboard } from "@/modules/liquidity-dashboard/components/ConfigurableDashboard";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Droplets, TrendingUp, DollarSign, Activity, ArrowRight, Bell, Info } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { getUserDashboardConfig } from "./config/dashboardConfig";
 import { DashboardLayout } from "./types/widget";
 
 export const LiquidityDashboard = () => {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("overview");
   const [dashboardLayout, setDashboardLayout] = useState<DashboardLayout>(
     getUserDashboardConfig("emma-li")
   );
@@ -24,39 +20,28 @@ export const LiquidityDashboard = () => {
     console.log('Dashboard layout updated:', newLayout);
   };
 
-  const navigationTabs = [
-    { id: "overview", label: "Overview", path: "/" },
-    { id: "liquidity-pools", label: "Liquidity Pools", path: "/liquidity-pools" },
-    { id: "account-structure", label: "Account Structure", path: "/account-structure" }
-  ];
-
-  const handleTabClick = (tab: any) => {
-    setActiveTab(tab.id);
-    navigate(tab.path);
-  };
-
   return (
     <div className="space-y-6">
-      {/* Top Navigation Tabs */}
-      <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-        <div className="flex space-x-1">
-          {navigationTabs.map((tab) => (
-            <Button
-              key={tab.id}
-              variant={activeTab === tab.id ? "default" : "ghost"}
-              onClick={() => handleTabClick(tab)}
-              className={`px-6 py-2 rounded-lg font-medium transition-colors ${
-                activeTab === tab.id
-                  ? "bg-blue-600 text-white shadow-sm"
-                  : "text-slate-600 hover:text-slate-800 hover:bg-slate-50"
-              }`}
-            >
-              {tab.label}
-            </Button>
-          ))}
+      {/* Header with timestamp and time period selector */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-slate-800 mb-2">Liquidity Dashboard</h2>
+          <p className="text-slate-600">Real-time liquidity management for global treasury operations</p>
+          <div className="flex items-center gap-4 mt-2">
+            <span className="text-sm text-slate-500">Welcome back, Emma Li</span>
+            <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Corporate Treasury Manager</span>
+            <span className="text-xs text-slate-500">Last Updated: Today, 10:45 AM</span>
+          </div>
         </div>
         
         <div className="flex space-x-3">
+          <Button 
+            size="sm"
+            variant="outline"
+            className="border-slate-300 text-slate-600"
+          >
+            Last 7 days
+          </Button>
           <Button 
             size="sm"
             variant="outline"
@@ -65,25 +50,6 @@ export const LiquidityDashboard = () => {
             <Bell className="mr-2 h-4 w-4" />
             CFO Report Due
           </Button>
-          <Button 
-            onClick={() => navigate('/liquidity-pools')}
-            className="bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            View Liquidity Pools
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      </div>
-
-      {/* Header with Emma's context */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">Treasury Dashboard</h2>
-          <p className="text-slate-600">Real-time liquidity management for global treasury operations</p>
-          <div className="flex items-center gap-2 mt-2">
-            <span className="text-sm text-slate-500">Welcome back, Emma Li</span>
-            <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Corporate Treasury Manager</span>
-          </div>
         </div>
       </div>
 
@@ -99,35 +65,8 @@ export const LiquidityDashboard = () => {
           <HoverCardTrigger asChild>
             <div className="relative">
               <MetricCard
-                title="Total Available Cash"
-                value="$2,847M"
-                change="+12.4%"
-                icon={Droplets}
-                trend="up"
-              />
-              <Info className="absolute top-2 right-2 h-4 w-4 text-slate-400" />
-            </div>
-          </HoverCardTrigger>
-          <HoverCardContent className="w-80">
-            <div className="space-y-2">
-              <h4 className="font-semibold">Total Available Cash</h4>
-              <p className="text-sm text-slate-600">
-                Aggregated cash positions across all bank accounts and currencies. 
-                This includes immediately available funds for operations and settlements.
-              </p>
-              <div className="text-xs text-slate-500">
-                Last updated: 2 minutes ago • Source: Multi-bank API
-              </div>
-            </div>
-          </HoverCardContent>
-        </HoverCard>
-
-        <HoverCard>
-          <HoverCardTrigger asChild>
-            <div className="relative">
-              <MetricCard
-                title="Nostro Optimization"
-                value="73.2%"
+                title="Net Transfer Volume"
+                value="$12.5M"
                 change="+8.2%"
                 icon={TrendingUp}
                 trend="up"
@@ -137,13 +76,40 @@ export const LiquidityDashboard = () => {
           </HoverCardTrigger>
           <HoverCardContent className="w-80">
             <div className="space-y-2">
-              <h4 className="font-semibold">Nostro Optimization</h4>
+              <h4 className="font-semibold">Net Transfer Volume</h4>
               <p className="text-sm text-slate-600">
-                Efficiency metric showing how well nostro accounts are optimized. 
-                Higher percentages indicate better cash utilization and reduced idle funds.
+                Total net transfer volume across all treasury operations today. 
+                Includes intercompany transfers, settlements, and external payments.
               </p>
               <div className="text-xs text-slate-500">
-                Target: 75% • Current trend: Improving
+                Last updated: 5 minutes ago • Daily target: $15M
+              </div>
+            </div>
+          </HoverCardContent>
+        </HoverCard>
+
+        <HoverCard>
+          <HoverCardTrigger asChild>
+            <div className="relative">
+              <MetricCard
+                title="Cash Efficiency Ratio"
+                value="1.42"
+                change="+0.08"
+                icon={TrendingUp}
+                trend="up"
+              />
+              <Info className="absolute top-2 right-2 h-4 w-4 text-slate-400" />
+            </div>
+          </HoverCardTrigger>
+          <HoverCardContent className="w-80">
+            <div className="space-y-2">
+              <h4 className="font-semibold">Cash Efficiency Ratio</h4>
+              <p className="text-sm text-slate-600">
+                Ratio of productive cash deployment to total cash holdings. 
+                Higher ratios indicate better utilization of available liquidity.
+              </p>
+              <div className="text-xs text-slate-500">
+                Target: 1.5 • Current trend: Improving
               </div>
             </div>
           </HoverCardContent>
@@ -180,9 +146,9 @@ export const LiquidityDashboard = () => {
           <HoverCardTrigger asChild>
             <div className="relative">
               <MetricCard
-                title="Settlements Today"
-                value="47"
-                change="+12"
+                title="Pending Settlements"
+                value="$3.2M"
+                change="+$0.8M"
                 icon={Activity}
                 trend="up"
               />
@@ -191,13 +157,13 @@ export const LiquidityDashboard = () => {
           </HoverCardTrigger>
           <HoverCardContent className="w-80">
             <div className="space-y-2">
-              <h4 className="font-semibold">Settlements Today</h4>
+              <h4 className="font-semibold">Pending Settlements</h4>
               <p className="text-sm text-slate-600">
-                Number of intercompany and external settlements processed today. 
+                Total value of settlements pending completion today. 
                 Includes both incoming and outgoing transactions across all entities.
               </p>
               <div className="text-xs text-slate-500">
-                Pending: 3 • Failed: 0 • Success rate: 100%
+                Count: 47 transactions • Failed: 0 • Success rate: 100%
               </div>
             </div>
           </HoverCardContent>

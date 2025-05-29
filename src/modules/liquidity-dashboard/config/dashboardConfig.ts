@@ -5,7 +5,7 @@ export const emmaDashboardConfig: DashboardLayout = {
   gridCols: 4,
   widgets: [
     {
-      id: 'cash-visibility',
+      id: 'liquidity-snapshot',
       position: { col: 1, row: 1, colSpan: 2, rowSpan: 1 },
       isVisible: true,
     },
@@ -27,8 +27,6 @@ export const emmaDashboardConfig: DashboardLayout = {
   ],
 };
 
-// Future: This could be loaded from localStorage or API based on user preferences
 export const getUserDashboardConfig = (userId: string): DashboardLayout => {
-  // For now, return Emma's default config
   return emmaDashboardConfig;
 };

@@ -2,9 +2,10 @@
 import { Header } from "@/shell/components/Header";
 import { Navigation } from "@/shell/components/Navigation";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LiquidityDashboard } from "@/modules/liquidity-dashboard/LiquidityDashboard";
-import { LiquidityPools } from "@/modules/liquidity-pools/LiquidityPools";
-import { AccountStructure } from "@/modules/account-structure/AccountStructure";
+import { Overview } from "@/modules/overview/Overview";
+import { Transfers } from "@/modules/transfers/Transfers";
+import { Analytics } from "@/modules/analytics/Analytics";
+import { Reports } from "@/modules/reports/Reports";
 import NotFound from "@/pages/NotFound";
 
 export const Shell = () => {
@@ -16,9 +17,11 @@ export const Shell = () => {
           <Navigation />
           <main className="flex-1 p-6">
             <Routes>
-              <Route path="/" element={<LiquidityDashboard />} />
-              <Route path="/liquidity-pools" element={<LiquidityPools />} />
-              <Route path="/account-structure" element={<AccountStructure />} />
+              <Route path="/" element={<Overview />} />
+              <Route path="/overview/*" element={<Overview />} />
+              <Route path="/transfers" element={<Transfers />} />
+              <Route path="/analytics" element={<Analytics />} />
+              <Route path="/reports" element={<Reports />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
