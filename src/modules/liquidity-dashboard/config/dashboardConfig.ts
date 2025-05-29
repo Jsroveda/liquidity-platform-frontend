@@ -15,18 +15,18 @@ export const emmaDashboardConfig: DashboardLayout = {
       isVisible: true,
     },
     {
-      id: 'liquidity-metrics',
-      position: { col: 1, row: 2, colSpan: 4, rowSpan: 1 },
+      id: 'ai-forecast',
+      position: { col: 4, row: 2, colSpan: 1, rowSpan: 1 },
       isVisible: true,
     },
     {
-      id: 'ai-forecast',
-      position: { col: 1, row: 3, colSpan: 1, rowSpan: 1 },
+      id: 'liquidity-metrics',
+      position: { col: 1, row: 3, colSpan: 4, rowSpan: 1 },
       isVisible: true,
     },
     {
       id: 'settlement-status',
-      position: { col: 2, row: 3, colSpan: 1, rowSpan: 1 },
+      position: { col: 1, row: 4, colSpan: 2, rowSpan: 1 },
       isVisible: true,
     },
   ],
