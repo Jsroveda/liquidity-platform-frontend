@@ -15,6 +15,9 @@ export const LiquidityDashboard = () => {
     getUserDashboardConfig("emma-li")
   );
 
+  console.log('LiquidityDashboard - dashboard layout:', dashboardLayout);
+  console.log('LiquidityDashboard - widgets:', dashboardLayout.widgets);
+
   const handleLayoutChange = (newLayout: DashboardLayout) => {
     setDashboardLayout(newLayout);
     console.log('Dashboard layout updated:', newLayout);
