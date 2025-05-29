@@ -24,7 +24,7 @@ const meta: Meta<typeof MetricCard> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const TrendingUp: Story = {
+export const PositiveTrend: Story = {
   args: {
     title: 'Net Transfer Volume',
     value: '$12.5M',
@@ -34,7 +34,7 @@ export const TrendingUp: Story = {
   },
 };
 
-export const TrendingDown: Story = {
+export const NegativeTrend: Story = {
   args: {
     title: 'Available Liquidity',
     value: '$2.1M',
@@ -44,7 +44,7 @@ export const TrendingDown: Story = {
   },
 };
 
-export const Neutral: Story = {
+export const NeutralTrend: Story = {
   args: {
     title: 'Pending Settlements',
     value: '$3.2M',
@@ -54,7 +54,7 @@ export const Neutral: Story = {
   },
 };
 
-export const WithAlert: Story = {
+export const AlertMetric: Story = {
   args: {
     title: 'Risk Alert',
     value: 'High',
