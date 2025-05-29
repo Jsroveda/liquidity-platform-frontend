@@ -24,10 +24,10 @@ export const MetricCard = ({ title, value, change, icon: Icon, trend }: MetricCa
               {change}
             </p>
           </div>
-          <div className={`p-3 rounded-lg ${
+          <div className={`p-2 rounded-lg ${
             trend === "up" ? "bg-green-100 text-green-600" : trend === "down" ? "bg-red-100 text-red-600" : "bg-slate-100 text-slate-600"
           }`}>
-            <Icon className="h-6 w-6" />
+            <Icon className="h-4 w-4" />
           </div>
         </div>
       </CardContent>
