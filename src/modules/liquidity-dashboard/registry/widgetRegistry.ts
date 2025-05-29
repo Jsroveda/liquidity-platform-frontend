@@ -1,6 +1,7 @@
 
 import { WidgetConfig } from '../types/widget';
 import { LiquiditySnapshotWidget } from '../components/LiquiditySnapshotWidget';
+import { LiquidityMetricsWidget } from '../components/LiquidityMetricsWidget';
 import { AIForecastWidget } from '../components/AIForecastWidget';
 import { QuickActionsWidget } from '../components/QuickActionsWidget';
 import { SettlementStatusWidget } from '../components/SettlementStatusWidget';
@@ -13,6 +14,16 @@ export const widgetRegistry: Record<string, WidgetConfig> = {
     description: 'Total liquidity overview with multi-currency breakdown and account drill-down',
     defaultSize: { cols: 2, rows: 1 },
     category: 'cash',
+    roles: ['treasury-manager', 'cfo'],
+    isVisible: true,
+  },
+  'liquidity-metrics': {
+    id: 'liquidity-metrics',
+    component: LiquidityMetricsWidget,
+    title: 'Liquidity Metrics Overview',
+    description: 'Comprehensive liquidity metrics including transfers, efficiency, and risk indicators',
+    defaultSize: { cols: 4, rows: 1 },
+    category: 'analytics',
     roles: ['treasury-manager', 'cfo'],
     isVisible: true,
   },

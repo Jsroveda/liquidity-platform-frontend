@@ -1,11 +1,11 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MetricCard } from "@/modules/liquidity-dashboard/components/MetricCard";
 import { LiquidityChart } from "@/modules/liquidity-dashboard/components/LiquidityChart";
 import { RecentActivity } from "@/modules/liquidity-dashboard/components/RecentActivity";
 import { ConfigurableDashboard } from "@/modules/liquidity-dashboard/components/ConfigurableDashboard";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { Droplets, TrendingUp, DollarSign, Activity, ArrowRight, Bell, Info } from "lucide-react";
+import { Bell, Info } from "lucide-react";
 import { useState } from "react";
 import { getUserDashboardConfig } from "./config/dashboardConfig";
 import { DashboardLayout } from "./types/widget";
@@ -58,117 +58,6 @@ export const LiquidityDashboard = () => {
         layout={dashboardLayout}
         onLayoutChange={handleLayoutChange}
       />
-
-      {/* Key Metrics Row with Hover Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <HoverCard>
-          <HoverCardTrigger asChild>
-            <div className="relative">
-              <MetricCard
-                title="Net Transfer Volume"
-                value="$12.5M"
-                change="+8.2%"
-                icon={TrendingUp}
-                trend="up"
-              />
-              <Info className="absolute top-2 right-2 h-4 w-4 text-slate-400" />
-            </div>
-          </HoverCardTrigger>
-          <HoverCardContent className="w-80">
-            <div className="space-y-2">
-              <h4 className="font-semibold">Net Transfer Volume</h4>
-              <p className="text-sm text-slate-600">
-                Total net transfer volume across all treasury operations today. 
-                Includes intercompany transfers, settlements, and external payments.
-              </p>
-              <div className="text-xs text-slate-500">
-                Last updated: 5 minutes ago • Daily target: $15M
-              </div>
-            </div>
-          </HoverCardContent>
-        </HoverCard>
-
-        <HoverCard>
-          <HoverCardTrigger asChild>
-            <div className="relative">
-              <MetricCard
-                title="Cash Efficiency Ratio"
-                value="1.42"
-                change="+0.08"
-                icon={TrendingUp}
-                trend="up"
-              />
-              <Info className="absolute top-2 right-2 h-4 w-4 text-slate-400" />
-            </div>
-          </HoverCardTrigger>
-          <HoverCardContent className="w-80">
-            <div className="space-y-2">
-              <h4 className="font-semibold">Cash Efficiency Ratio</h4>
-              <p className="text-sm text-slate-600">
-                Ratio of productive cash deployment to total cash holdings. 
-                Higher ratios indicate better utilization of available liquidity.
-              </p>
-              <div className="text-xs text-slate-500">
-                Target: 1.5 • Current trend: Improving
-              </div>
-            </div>
-          </HoverCardContent>
-        </HoverCard>
-
-        <HoverCard>
-          <HoverCardTrigger asChild>
-            <div className="relative">
-              <MetricCard
-                title="FX Cost Savings"
-                value="11.3bp"
-                change="-2.1bp"
-                icon={DollarSign}
-                trend="up"
-              />
-              <Info className="absolute top-2 right-2 h-4 w-4 text-slate-400" />
-            </div>
-          </HoverCardTrigger>
-          <HoverCardContent className="w-80">
-            <div className="space-y-2">
-              <h4 className="font-semibold">FX Cost Savings</h4>
-              <p className="text-sm text-slate-600">
-                Foreign exchange cost savings achieved through netting and optimization. 
-                Measured in basis points (bp) compared to standard market rates.
-              </p>
-              <div className="text-xs text-slate-500">
-                Monthly average: 9.8bp • Annual target: 12bp
-              </div>
-            </div>
-          </HoverCardContent>
-        </HoverCard>
-
-        <HoverCard>
-          <HoverCardTrigger asChild>
-            <div className="relative">
-              <MetricCard
-                title="Pending Settlements"
-                value="$3.2M"
-                change="+$0.8M"
-                icon={Activity}
-                trend="up"
-              />
-              <Info className="absolute top-2 right-2 h-4 w-4 text-slate-400" />
-            </div>
-          </HoverCardTrigger>
-          <HoverCardContent className="w-80">
-            <div className="space-y-2">
-              <h4 className="font-semibold">Pending Settlements</h4>
-              <p className="text-sm text-slate-600">
-                Total value of settlements pending completion today. 
-                Includes both incoming and outgoing transactions across all entities.
-              </p>
-              <div className="text-xs text-slate-500">
-                Count: 47 transactions • Failed: 0 • Success rate: 100%
-              </div>
-            </div>
-          </HoverCardContent>
-        </HoverCard>
-      </div>
 
       {/* Emma's Workflow Support Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">        
