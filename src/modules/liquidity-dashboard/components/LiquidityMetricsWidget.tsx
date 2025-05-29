@@ -16,7 +16,7 @@ export const LiquidityMetricsWidget = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-6 mb-6">
           <MetricCard
             title="Net Transfer Volume"
             value="$12.5M"
@@ -45,9 +45,6 @@ export const LiquidityMetricsWidget = () => {
             icon={Activity}
             trend="up"
           />
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <MetricCard
             title="Liquidity Risk Index"
             value="14"
