@@ -62,7 +62,7 @@ export const LiquidityDashboard = () => {
         onLayoutChange={handleLayoutChange}
       />
 
-      {/* Liquidity Trends - moved to be under the configurable widgets */}
+      {/* Liquidity Trends - positioned above Settlement Status */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <HoverCard>
           <HoverCardTrigger asChild>
