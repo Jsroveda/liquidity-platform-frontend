@@ -16,7 +16,7 @@ export const emmaDashboardConfig: DashboardLayout = {
     },
     {
       id: 'liquidity-metrics',
-      position: { col: 1, row: 2, colSpan: 8, rowSpan: 1 },
+      position: { col: 1, row: 2, colSpan: 2, rowSpan: 1 },
       isVisible: true,
     },
     {
