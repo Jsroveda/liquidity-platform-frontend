@@ -62,8 +62,8 @@ export const LiquidityDashboard = () => {
         onLayoutChange={handleLayoutChange}
       />
 
-      {/* Emma's Workflow Support Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">        
+      {/* Liquidity Trends - moved to be under the configurable widgets */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <HoverCard>
           <HoverCardTrigger asChild>
             <Card className="border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition-shadow">
