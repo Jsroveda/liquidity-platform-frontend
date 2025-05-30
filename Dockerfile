@@ -9,8 +9,8 @@ WORKDIR /app/ui-frontend
 COPY package*.json ./
 COPY bun.lockb ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install all dependencies not just prod dependencies
+RUN npm ci 
 
 # Copy source code
 COPY . .
